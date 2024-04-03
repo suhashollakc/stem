@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Source Separation</title>
+</head>
+<body>
+    <h1>Upload a file to separate into stems</h1>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if separated_files %}
+    <h2>Separated Tracks and Spectrograms</h2>
+    {% for track_name in separated_files.keys() %}
+    <div>
+        <h3>{{ track_name }}</h3>
+        <audio controls>
+            <source src="{{ separated_files[track_name] }}" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+        <img src="{{ spectrogram_files[track_name] }}" alt="{{ track_name }} spectrogram">
+    </div>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
